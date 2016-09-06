@@ -11,15 +11,15 @@ import UIKit
 class ViewController: UIViewController {
 
     var titles = [
-        "Default",
-        "Multiple Group Data",
+        "Simple",
+        "Multiple data, custom transition and color",
         "Nested Data"
     ]
     var buttons = [UIButton]()
     let buttinTitles = ["select a device", "select a mobile device", "select a Apple device"]
     var pickers: [UPicker?] = [nil, nil, nil]
     var datas = [[["Computer", "Mobile", "Watch", "VR Glass"]], [["iOS", "Android"], ["phone", "pad"]], [["iPhone", "iPad"]]]
-    var subData = [
+    var nestedData = [
         "iPhone": ["6s", "6s plus", "Others"],
         "iPad": ["Air", "Pro", "Others"],
         "6s": ["32GB", "64GB", "128GB"],
@@ -29,7 +29,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         for (index, text) in titles.enumerate() {
             
@@ -61,10 +60,11 @@ class ViewController: UIViewController {
                 if let rows = selected {
                     self.selecteds[index] = rows
                     
-                    if self.pickers[index]!.pickerView.isNested {
+                    if self.pickers[index]!.pickerView.nestedHierarchy > 0 {
                        self.datas[index] = self.pickers[index]!.pickerView.data
                     }
                     
+                    // change button title
                     var title = ""
                     for (i, s) in rows.enumerate() {
                         title += " " + self.datas[index][i][s]
@@ -73,24 +73,23 @@ class ViewController: UIViewController {
                 }
             })
             
-            // config picker
-            switch index {
-            case 1: break
-            case 2:
-                picker.pickerView.isNested = true
-                picker.pickerView.hierarchies = 3
-                picker.pickerView.subData = subData
+            if index == 1 {
+                picker.modalTransitionStyle = .FlipHorizontal
+                picker.pickerView.textColor = view.tintColor
                 picker.pickerView.doneButton.setTitleColor(UIColor.redColor(), forState: .Normal)
-//                picker.modalTransitionStyle = .FlipHorizontal
-            default:
-                break
+            } else if index == 2 {
+                picker.pickerView.nestedHierarchy = 3
+                picker.pickerView.nestedData = nestedData
             }
             
             pickers[index] = picker
         }
         
+        // set pickerView data and selected
         pickers[index]!.pickerView.data = datas[index]
         pickers[index]!.pickerView.selectedRows = selecteds[index]
+        
+        // present picker
         pickers[index]!.present(self)
     }
 

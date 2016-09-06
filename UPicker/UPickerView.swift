@@ -10,6 +10,7 @@ import UIKit
 
 public class UPickerView: UIView {
     
+    // present animation duration
     public var duration = 0.4
     
     // height of views
@@ -24,22 +25,48 @@ public class UPickerView: UIView {
         button: CGFloat(56)
     )
     
+    // the wrapper of pickerView and toolbar
     public let widgetView = UIView()
+    
+    // a transparent view on top of widgetView
+    // could be touched, and disappear this widget on event `tounchInSide`
     public let blankView = UIView()
+    
+    // blur background view of toolbar
     public let blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.ExtraLight))
     
+    // native picker view
     public let pickerView = UIPickerView()
+    
+    // toolbar
     public let barView = UIView()
+    
+    // doneButton
     public let doneButton = UIButton()
     
+    // the data will be show in picker view
     var data = [[String]]()
+    // selected row of pikcer view
     var selectedRows = [Int]()
+    // pick view textColor
     var textColor = UIColor.blackColor()
     
-    var subData = [String: [String]]()
-    var isNested = false
-    var hierarchies = 0
+    // hierarchy count
+    // if it greater than 0, detect widget is in nested mode or not
+    var nestedHierarchy = 0
     
+    // nestedData
+    // key is the title of parent
+    // value is a new component data
+    var nestedData = [String: [String]]()
+    
+    /**
+     * Override init function
+     * Init widget view
+     * Bind picker view dataSource and delegate to self
+     *
+     * @param frame:CGRect frame of view
+     */
     override public init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -53,7 +80,14 @@ public class UPickerView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    /**
+     * Override layoutSubviews function
+     * Change views frame to adapt
+     * Mostly be used when device orientation change
+     */
     override public func layoutSubviews() {
+        super.layoutSubviews()
+        
         let frame = self.frame
         
         // reset frame of views
@@ -67,7 +101,11 @@ public class UPickerView: UIView {
         doneButton.frame = CGRect(x: frame.width - width, y: 0, width: width, height: height.bar)
     }
     
-    func initView() {
+    /**
+     * init view function
+     * init all views in this widget
+     */
+    public func initView() {
         self.addSubview(widgetView)
         
         // blur view
@@ -84,17 +122,24 @@ public class UPickerView: UIView {
         // bar view and done button
         widgetView.addSubview(barView)
         barView.addSubview(doneButton)
+        
+        // style button
         doneButton.titleLabel?.font = UIFont.systemFontOfSize(16)
         doneButton.setTitle("Done", forState: .Normal)
         doneButton.setTitleColor(self.tintColor, forState: .Normal)
     }
     
-    func render() {
+    /**
+     * Render the pickerView.
+     * If in nested mode, it will evaluate the correct `data`
+     */
+    public func render() {
         
-        if isNested {
-            while data.count < hierarchies {
+        // evaluate `data` if in nested mode
+        if nestedHierarchy > 0 {
+            while data.count < nestedHierarchy {
                 let selected = data[data.count - 1][selectedRows[data.count - 1]]
-                if let sub = subData[selected] {
+                if let sub = nestedData[selected] {
                     data.append(sub)
                 } else {
                     data.append([])
@@ -103,18 +148,27 @@ public class UPickerView: UIView {
             
         }
         
+        // reload all components
         pickerView.reloadAllComponents()
+        
+        // set selected of rows
         for (index, row) in selectedRows.enumerate() {
             pickerView.selectRow(row, inComponent: index, animated: false)
             
         }
     }
     
-    func rerender(index: Int) {
-        
-        for i in index..<hierarchies {
+    /**
+     * Rerender Components if need, when select a prev component.
+     * Just be Used in nested mode
+     *
+     * @private
+     * @param index:Int the beginning of component needs rerender
+     */
+    private func rerenderComponent(index: Int) {
+        for i in index..<nestedHierarchy {
             let selected = data[i - 1][selectedRows[i - 1]]
-            if let sub = subData[selected] {
+            if let sub = nestedData[selected] {
                 data[i] = sub
             } else {
                 data[i] = []
@@ -153,14 +207,16 @@ extension UPickerView: UIPickerViewDataSource, UIPickerViewDelegate {
     
     public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
+        // store selected data in `selectedRows`
         if component < selectedRows.count {
             selectedRows[component] = row
         } else {
             selectedRows.append(row)
         }
         
-        if isNested {
-            rerender(component + 1)
+        // rerender component if in nested mode
+        if nestedHierarchy > 0 {
+            rerenderComponent(component + 1)
         }
     }
 }

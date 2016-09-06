@@ -14,13 +14,16 @@ public class UPicker: UIViewController {
         fatalError("init(coder:) has not been implemented")
     }
     
+    // picker view whick includes all views of widget
     public var pickerView: UPickerView!
     public var didDisappear: (([Int]?) -> Void)? = nil
     
+    // render picker view before widget appear
     override public func viewWillAppear(animated: Bool) {
         pickerView.render()
     }
     
+    // init widget and bind event
     public init(frame: CGRect, didDisappear: (([Int]?) -> Void)? = nil) {
         super.init(nibName: nil, bundle: nil)
         self.modalPresentationStyle = UIModalPresentationStyle.OverFullScreen
@@ -41,6 +44,10 @@ public class UPicker: UIViewController {
         previous.presentViewController(self, animated: true, completion: nil)
     }
     
+    /**
+     * Handle blank view tap event.
+     * Disappear widget without selectedRows.
+     */
     public func handleBlankViewTap() {
         self.dismissViewControllerAnimated(true, completion: {
             if self.didDisappear != nil {
@@ -49,6 +56,11 @@ public class UPicker: UIViewController {
         })
     }
     
+    /**
+     * Handle done button tap event.
+     * Disappear widget with selectedRows.
+     * If in nested mode, evaluate the correct selectedRows
+     */
     public func handleDoneButtonTap() {
         self.dismissViewControllerAnimated(true, completion: {
             if self.didDisappear != nil {
