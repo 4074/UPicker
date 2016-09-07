@@ -4,7 +4,7 @@ A picker widget written in Swift. Easy to use and set a custom style if you need
 
 ## Screenshot
 
-![screenshot](Screenshot/1.gif)
+![screenshot](Screenshots/1.gif)
 
 ## Installation
 
