@@ -82,10 +82,10 @@ picker.pickerView.nestedData = [
       
 `UPicker.pickerView` is a instance of `UPickerView` that is a child class of `UIView`. And You can get some view from its properties
 
-    - pickerView: UIPickerView
-    - barView: UIView
-    - doneButton: UIButton
-    - blankView: UIView
+- pickerView: UIPickerView
+- barView: UIView
+- doneButton: UIButton
+- blankView: UIView
     
 Therefor, You can do anything what you want with them. 
     
