@@ -45,20 +45,20 @@ public class UPickerView: UIView {
     public let doneButton = UIButton()
     
     // the data will be show in picker view
-    var data = [[String]]()
+    public var data = [[String]]()
     // selected row of pikcer view
-    var selectedRows = [Int]()
+    public var selectedRows = [Int]()
     // pick view textColor
-    var textColor = UIColor.blackColor()
+    public var textColor = UIColor.blackColor()
     
     // hierarchy count
     // if it greater than 0, detect widget is in nested mode or not
-    var nestedHierarchy = 0
+    public var nestedHierarchy = 0
     
     // nestedData
     // key is the title of parent
     // value is a new component data
-    var nestedData = [String: [String]]()
+    public var nestedData = [String: [String]]()
     
     /**
      * Override init function
