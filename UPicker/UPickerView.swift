@@ -8,57 +8,57 @@
 
 import UIKit
 
-public class UPickerView: UIView {
+open class UPickerView: UIView {
     
     // present animation duration
-    public var duration = 0.4
+    open var duration = 0.4
     
     // height of views
-    public var height = (
+    open var height = (
         widget: CGFloat(248),
         picker: CGFloat(216),
         bar: CGFloat(32)
     )
     
     // width of views
-    public var width = (
+    open var width = (
         button: CGFloat(56)
     )
     
     // the wrapper of pickerView and toolbar
-    public let widgetView = UIView()
+    open let widgetView = UIView()
     
     // a transparent view on top of widgetView
     // could be touched, and disappear this widget on event `tounchInSide`
-    public let blankView = UIView()
+    open let blankView = UIView()
     
     // blur background view of toolbar
-    public let blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.ExtraLight))
+    open let blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.extraLight))
     
     // native picker view
-    public let pickerView = UIPickerView()
+    open let pickerView = UIPickerView()
     
     // toolbar
-    public let barView = UIView()
+    open let barView = UIView()
     
     // doneButton
-    public let doneButton = UIButton()
+    open let doneButton = UIButton()
     
     // the data will be show in picker view
-    public var data = [[String]]()
+    open var data = [[String]]()
     // selected row of pikcer view
-    public var selectedRows = [Int]()
+    open var selectedRows = [Int]()
     // pick view textColor
-    public var textColor = UIColor.blackColor()
+    open var textColor = UIColor.black
     
     // hierarchy count
     // if it greater than 0, detect widget is in nested mode or not
-    public var nestedHierarchy = 0
+    open var nestedHierarchy = 0
     
     // nestedData
     // key is the title of parent
     // value is a new component data
-    public var nestedData = [String: [String]]()
+    open var nestedData = [String: [String]]()
     
     /**
      * Override init function
@@ -85,7 +85,7 @@ public class UPickerView: UIView {
      * Change views frame to adapt
      * Mostly be used when device orientation change
      */
-    override public func layoutSubviews() {
+    override open func layoutSubviews() {
         super.layoutSubviews()
         
         let frame = self.frame
@@ -105,35 +105,35 @@ public class UPickerView: UIView {
      * init view function
      * init all views in this widget
      */
-    public func initView() {
+    open func initView() {
         self.addSubview(widgetView)
         
         // blur view
         widgetView.addSubview(blurView)
-        blurView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         
         // blank view
         self.addSubview(blankView)
         
         // date picker view
         widgetView.addSubview(pickerView)
-        pickerView.backgroundColor = UIColor.whiteColor()
+        pickerView.backgroundColor = UIColor.white
         
         // bar view and done button
         widgetView.addSubview(barView)
         barView.addSubview(doneButton)
         
         // style button
-        doneButton.titleLabel?.font = UIFont.systemFontOfSize(16)
-        doneButton.setTitle("Done", forState: .Normal)
-        doneButton.setTitleColor(self.tintColor, forState: .Normal)
+        doneButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
+        doneButton.setTitle("Done", for: UIControlState())
+        doneButton.setTitleColor(self.tintColor, for: UIControlState())
     }
     
     /**
      * Render the pickerView.
      * If in nested mode, it will evaluate the correct `data`
      */
-    public func render() {
+    open func render() {
         
         // evaluate `data` if in nested mode
         if nestedHierarchy > 0 {
@@ -152,7 +152,7 @@ public class UPickerView: UIView {
         pickerView.reloadAllComponents()
         
         // set selected of rows
-        for (index, row) in selectedRows.enumerate() {
+        for (index, row) in selectedRows.enumerated() {
             pickerView.selectRow(row, inComponent: index, animated: false)
             
         }
@@ -165,7 +165,7 @@ public class UPickerView: UIView {
      * @private
      * @param index:Int the beginning of component needs rerender
      */
-    private func rerenderComponent(index: Int) {
+    fileprivate func rerenderComponent(_ index: Int) {
         for i in index..<nestedHierarchy {
             let selected = data[i - 1][selectedRows[i - 1]]
             if let sub = nestedData[selected] {
@@ -186,26 +186,26 @@ public class UPickerView: UIView {
 }
 
 extension UPickerView: UIPickerViewDataSource, UIPickerViewDelegate {
-    public func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+    public func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return data.count
     }
     
-    public func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+    public func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return data[component].count
     }
     
-    public func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
+    public func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return data[component][row]
     }
     
-    public func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+    public func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let text = data[component][row]
         let attrs = [NSForegroundColorAttributeName: textColor]
         
         return NSAttributedString(string: text, attributes: attrs)
     }
     
-    public func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
+    public func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         
         // store selected data in `selectedRows`
         if component < selectedRows.count {

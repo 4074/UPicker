@@ -30,19 +30,19 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        for (index, text) in titles.enumerate() {
+        for (index, text) in titles.enumerated() {
             
             // create label
             let label = UILabel(frame: CGRect(x: 16, y: 90 * index + 60, width: 300, height: 20))
-            label.font = label.font.fontWithSize(14)
+            label.font = label.font.withSize(14)
             label.text = text
             view.addSubview(label)
             
             // create button
             let button = UIButton(frame: CGRect(x: 16, y: 90 * index + 90, width: 220, height: 36))
             button.backgroundColor = view.tintColor
-            button.setTitle(buttinTitles[index], forState: .Normal)
-            button.addTarget(self, action: #selector(self.showPicker(_:)), forControlEvents: .TouchUpInside)
+            button.setTitle(buttinTitles[index], for: UIControlState())
+            button.addTarget(self, action: #selector(self.showPicker(_:)), for: .touchUpInside)
             button.layer.cornerRadius = 4
             button.layer.masksToBounds = true
             button.tag = index
@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         
     }
     
-    func showPicker(sender: UIButton) {
+    func showPicker(_ sender: UIButton) {
         let index = sender.tag
         if pickers[index] == nil {
             
@@ -66,17 +66,17 @@ class ViewController: UIViewController {
                     
                     // change button title
                     var title = ""
-                    for (i, s) in rows.enumerate() {
+                    for (i, s) in rows.enumerated() {
                         title += " " + self.datas[index][i][s]
                     }
-                    sender.setTitle(title, forState: .Normal)
+                    sender.setTitle(title, for: UIControlState())
                 }
             })
             
             if index == 1 {
-                picker.modalTransitionStyle = .FlipHorizontal
+                picker.modalTransitionStyle = .flipHorizontal
                 picker.pickerView.textColor = view.tintColor
-                picker.pickerView.doneButton.setTitleColor(UIColor.redColor(), forState: .Normal)
+                picker.pickerView.doneButton.setTitleColor(UIColor.red, for: UIControlState())
             } else if index == 2 {
                 picker.pickerView.nestedHierarchy = 3
                 picker.pickerView.nestedData = nestedData

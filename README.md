@@ -14,6 +14,11 @@ A picker widget written in Swift. Easy to use and set a custom style if you need
 pod "UPicker"
 ```
 
+For Swift 2.3 support please use [UPicker 0.1.1](https://github.com/4074/UPicker/tree/0.1.1)
+```
+pod 'UPicker', '~>0.1.1'
+```
+
 #### Manual
 
 Download `UPicker.swift` and `UPickerView.swift`, and add them into your project.
