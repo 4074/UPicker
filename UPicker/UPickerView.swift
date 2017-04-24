@@ -22,7 +22,7 @@ open class UPickerView: UIView {
     
     // width of views
     open var width = (
-        button: CGFloat(56)
+        CGFloat(56)
     )
     
     // the wrapper of pickerView and toolbar
