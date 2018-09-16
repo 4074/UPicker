@@ -8,13 +8,13 @@
 
 Pod::Spec.new do |s|
   s.name         = "UPicker"
-  s.version      = "1.0.1"
+  s.version      = "1.1.0"
   s.summary      = "A picker widget written in Swift which is lightweight and extensible."
   s.homepage     = "https://github.com/4074/UPicker"
   s.license      = "MIT"
   s.author       = { "4074" => "fourzerosevenfour@gmail.com" }
   s.platform     = :ios, "8.0"
-  s.source       = { :git => "https://github.com/4074/UPicker.git", :tag => "1.0.1" }
+  s.source       = { :git => "https://github.com/4074/UPicker.git", :tag => "1.1.0" }
   s.source_files = "UPicker/*.swift"
   s.frameworks   = ['UIKit']
 end

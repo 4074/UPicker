@@ -51,7 +51,7 @@ class ViewController: UIViewController {
         
     }
     
-    func showPicker(_ sender: UIButton) {
+    @objc func showPicker(_ sender: UIButton) {
         let index = sender.tag
         if pickers[index] == nil {
             

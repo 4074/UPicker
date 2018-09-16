@@ -10,12 +10,14 @@ A picker widget written in Swift. Easy to use and set a custom style if you need
 
 #### CocoaPods
 
-```
-pod "UPicker"
-```
+```ruby
+# for swift 4
+pod "UPicker", '~>1.1.0'
 
-For Swift 2.3 support please use [UPicker 0.1.1](https://github.com/4074/UPicker/tree/0.1.1)
-```
+# fot swift 3
+pod "UPicker", '~>1.0.1'
+
+# for swift 2.3
 pod 'UPicker', '~>0.1.1'
 ```
 
