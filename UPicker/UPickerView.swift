@@ -26,23 +26,23 @@ open class UPickerView: UIView {
     )
     
     // the wrapper of pickerView and toolbar
-    open let widgetView = UIView()
+    public let widgetView = UIView()
     
     // a transparent view on top of widgetView
     // could be touched, and disappear this widget on event `tounchInSide`
-    open let blankView = UIView()
+    public let blankView = UIView()
     
     // blur background view of toolbar
-    open let blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.extraLight))
+    public let blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.extraLight))
     
     // native picker view
-    open let pickerView = UIPickerView()
+    public let pickerView = UIPickerView()
     
     // toolbar
-    open let barView = UIView()
+    public let barView = UIView()
     
     // doneButton
-    open let doneButton = UIButton()
+    public let doneButton = UIButton()
     
     // the data will be show in picker view
     open var data = [[String]]()
@@ -200,7 +200,7 @@ extension UPickerView: UIPickerViewDataSource, UIPickerViewDelegate {
     
     public func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let text = data[component][row]
-        let attrs = [NSForegroundColorAttributeName: textColor]
+        let attrs = [NSAttributedStringKey.foregroundColor: textColor]
         
         return NSAttributedString(string: text, attributes: attrs)
     }

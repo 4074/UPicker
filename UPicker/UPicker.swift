@@ -48,7 +48,7 @@ open class UPicker: UIViewController {
      * Handle blank view tap event.
      * Disappear widget without selectedRows.
      */
-    open func handleBlankViewTap() {
+    @objc open func handleBlankViewTap() {
         self.dismiss(animated: true, completion: {
             if self.didDisappear != nil {
                 self.didDisappear!(nil)
@@ -61,7 +61,7 @@ open class UPicker: UIViewController {
      * Disappear widget with selectedRows.
      * If in nested mode, evaluate the correct selectedRows
      */
-    open func handleDoneButtonTap() {
+    @objc open func handleDoneButtonTap() {
         self.dismiss(animated: true, completion: {
             if self.didDisappear != nil {
                 var selected = [Int]()
