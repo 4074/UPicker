@@ -41,7 +41,7 @@ class ViewController: UIViewController {
             // create button
             let button = UIButton(frame: CGRect(x: 16, y: 90 * index + 90, width: 220, height: 36))
             button.backgroundColor = view.tintColor
-            button.setTitle(buttinTitles[index], for: UIControlState())
+            button.setTitle(buttinTitles[index], for: UIControl.State())
             button.addTarget(self, action: #selector(self.showPicker(_:)), for: .touchUpInside)
             button.layer.cornerRadius = 4
             button.layer.masksToBounds = true
@@ -69,14 +69,14 @@ class ViewController: UIViewController {
                     for (i, s) in rows.enumerated() {
                         title += " " + self.datas[index][i][s]
                     }
-                    sender.setTitle(title, for: UIControlState())
+                    sender.setTitle(title, for: UIControl.State())
                 }
             })
             
             if index == 1 {
                 picker.modalTransitionStyle = .flipHorizontal
                 picker.pickerView.textColor = view.tintColor
-                picker.pickerView.doneButton.setTitleColor(UIColor.red, for: UIControlState())
+                picker.pickerView.doneButton.setTitleColor(UIColor.red, for: UIControl.State())
             } else if index == 2 {
                 picker.pickerView.nestedHierarchy = 3
                 picker.pickerView.nestedData = nestedData

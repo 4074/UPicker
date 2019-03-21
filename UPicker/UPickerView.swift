@@ -33,7 +33,7 @@ open class UPickerView: UIView {
     public let blankView = UIView()
     
     // blur background view of toolbar
-    public let blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffectStyle.extraLight))
+    public let blurView = UIVisualEffectView(effect: UIBlurEffect(style: UIBlurEffect.Style.extraLight))
     
     // native picker view
     public let pickerView = UIPickerView()
@@ -125,8 +125,8 @@ open class UPickerView: UIView {
         
         // style button
         doneButton.titleLabel?.font = UIFont.systemFont(ofSize: 16)
-        doneButton.setTitle("Done", for: UIControlState())
-        doneButton.setTitleColor(self.tintColor, for: UIControlState())
+        doneButton.setTitle("Done", for: UIControl.State())
+        doneButton.setTitleColor(self.tintColor, for: UIControl.State())
     }
     
     /**
@@ -200,7 +200,7 @@ extension UPickerView: UIPickerViewDataSource, UIPickerViewDelegate {
     
     public func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
         let text = data[component][row]
-        let attrs = [NSAttributedStringKey.foregroundColor: textColor]
+        let attrs = [NSAttributedString.Key.foregroundColor: textColor]
         
         return NSAttributedString(string: text, attributes: attrs)
     }
